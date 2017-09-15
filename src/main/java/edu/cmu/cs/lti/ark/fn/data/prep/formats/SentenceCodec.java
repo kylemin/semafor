@@ -112,7 +112,12 @@ public abstract class SentenceCodec {
 
 		@Override
 		protected Sentence computeNext() {
-			if(scanner.hasNext()) return codec.decode(scanner.next());
+			try {
+				if(scanner.hasNext()) return codec.decode(scanner.next());
+			} catch (Exception e) {
+				ArrayList<Token> tokens = Lists.newArrayList();
+				return new Sentence(tokens);
+			}
 			return endOfData();
 		}
 
